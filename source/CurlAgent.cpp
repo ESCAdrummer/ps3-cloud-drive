@@ -118,8 +118,10 @@ m_pimpl(new Impl)
 void CurlAgent::Init()
 {
     ::curl_easy_reset(m_pimpl->curl);
-    ::curl_easy_setopt(m_pimpl->curl, CURLOPT_SSL_VERIFYPEER, 1L);
-    ::curl_easy_setopt(m_pimpl->curl, CURLOPT_SSL_VERIFYHOST, 2L);
+    //::curl_easy_setopt(m_pimpl->curl, CURLOPT_SSL_VERIFYPEER, 1L);
+    //::curl_easy_setopt(m_pimpl->curl, CURLOPT_SSL_VERIFYHOST, 2L);
+    ::curl_easy_setopt(m_pimpl->curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+    ::curl_easy_setopt(m_pimpl->curl, CURLOPT_SSL_VERIFYHOST, FALSE);
     ::curl_easy_setopt(m_pimpl->curl, CURLOPT_CAINFO, "/dev_hdd0/game/PSCD00001/USRDIR/cert.cer");
     ::curl_easy_setopt(m_pimpl->curl, CURLOPT_HEADERFUNCTION, &CurlAgent::HeaderCallback);
     ::curl_easy_setopt(m_pimpl->curl, CURLOPT_WRITEHEADER, this);

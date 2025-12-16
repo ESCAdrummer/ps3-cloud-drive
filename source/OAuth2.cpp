@@ -25,9 +25,9 @@
 // for debugging
 #include <iostream>
 
-const std::string token_url = "https://accounts.google.com/o/oauth2/token";
+const std::string token_url = "https://oauth2.googleapis.com/token";
 const std::string verification_url = "https://www.google.com/device";
-const std::string device_url = "https://accounts.google.com/o/oauth2/device/code";
+const std::string device_url = "https://oauth2.googleapis.com/device/code";
 
 OAuth2::OAuth2(
                const std::string& refresh_code,
@@ -51,11 +51,10 @@ m_client_secret(client_secret)
 std::string OAuth2::Auth()
 {
     std::string post =
-            "code=" + m_device +
-            "&client_id=" + m_client_id +
+            "client_id=" + m_client_id +
             "&client_secret=" + m_client_secret +
-            "&grant_type=http://oauth.net/grant_type/device/1.0";
-
+            "&device_code=" + m_device +
+            "&grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code";
     JsonResponse resp;
     CurlAgent http;
 
@@ -82,11 +81,8 @@ std::string OAuth2::DeviceAuth()
     std::string usercode;
 
     std::string post =
-            "scope=" +
-            http.Escape("https://www.googleapis.com/auth/userinfo.email") + http.Escape(" ") +
-            http.Escape("https://docs.google.com/feeds") + http.Escape(" ") +
-            http.Escape("https://www.googleapis.com/auth/userinfo.profile") +
-            "&client_id=" + m_client_id;
+            "client_id=" + m_client_id +
+            "&scope=" + http.Escape("email profile ") + http.Escape("https://www.googleapis.com/auth/drive.file");
 
     http.Post(device_url, post, &resp, Header());
 
@@ -108,11 +104,10 @@ std::string OAuth2::DeviceAuth()
 std::string OAuth2::Refresh()
 {
     std::string post =
-            "refresh_token=" + m_refresh +
-            "&client_id=" + m_client_id +
-            "&client_secret=" + m_client_secret +
-            "&grant_type=refresh_token";
-
+                "client_id=" + m_client_id +
+                "&client_secret=" + m_client_secret +
+                "&refresh_token=" + m_refresh +
+                "&grant_type=refresh_token";
     JsonResponse resp;
     CurlAgent http;
     std::string status = "invalid";
