@@ -1,5 +1,31 @@
-ps3-cloud-drive
+**ps3-cloud-drive**
 ===============
+
+Based on the original source code by mhaqs in https://github.com/mhaqs/ps3-cloud-drive.
+
+Main differences:
+- Removed the need for authenticated curl agent in CurlAgent.cpp
+- Corrected API calls and body for current OAUTH 2.0.
+- Added sfo.xml and ICON0.PNG files required to build pkg file.
+- Created Google Cloud Service and enabled API. As of December 2025, I will host this in my Google account, however, the free version allows 12000 requests per minute. If this increases, I will need to remove it (otherwise I have to pay). In any case the procedure to build and create your own working version is below.
+
+**Procedure to build (I used Ubuntu 24.04):**
+
+- ps3toolchain needed (https://github.com/ps3dev/ps3toolchain). As of December 2025, the script 009 will fail. You will need to download it manually and resolve the failing dependencies (bad links towards unexistent files).
+
+- I will add a ps3toolchain fork containing the updated libraries at a later time and add a link to it here.
+
+- Go to the Google Cloud Services Console and create a project. In that project, enable the Google Drive API. This will generate a client-id and a client secret, which you will need to replace in the main.cpp file (lines 68 and 69).
+
+- With the proper keys and all dependencies installed, simply run 'make' to build the .elf file, then 'make pkg' to build the .pkg file.
+
+**Procedure to debug and see logs:**
+
+- Replace the IP address in log.cpp (line 9) with the IP of your computer.
+- From a terminal window, simply run 'nc -u -l -p 18194'.
+- Start the app on your PS3 and you will see the logs appear.
+
+**Original README:**
 
 An open source cloud sync utility for Playstation 3 games saves.
 
