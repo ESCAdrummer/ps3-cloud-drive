@@ -3,7 +3,7 @@
 
 Based on the original source code by mhaqs in https://github.com/mhaqs/ps3-cloud-drive.
 
-Main differences:
+**Main differences:**
 - Removed the need for authenticated curl agent in CurlAgent.cpp
 - Corrected API calls and body for current OAUTH 2.0.
 - Added sfo.xml and ICON0.PNG files required to build pkg file.
@@ -24,6 +24,8 @@ Main differences:
 - Replace the IP address in log.cpp (line 9) with the IP of your computer.
 - From a terminal window, simply run 'nc -u -l -p 18194'.
 - Start the app on your PS3 and you will see the logs appear.
+
+**NOTE:** When authorizing your device in your google account, make sure to check the box giving permission to do create/edit/update/delete operations to your Drive account :). Otherwise, it will have access to your profile and email but not your Drive.
 
 **Original README:**
 
